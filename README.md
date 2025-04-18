@@ -4,4 +4,4 @@ C#으로 만든 간단한 텍스트 RPG입니다. 직업을 고를 수 있고 �
 게임에 등장하는 아스키 아트는 https://www.asciiart.eu/ 에서 찾아서 사용하였습니다.
 
 # 실행 방법
-NewTextRPG 파일을 다운 받으시고 바로 가기를 실행하시거나 NewTextRPG\bin\Debug\net8.0 안에 있는 NewTextRPG를 실행하시면 됩니다.
+NewTextRPG 파일을 다운 받으시고 NewTextRPG\bin\Debug\net8.0 안에 있는 NewTextRPG를 실행하시면 됩니다.
