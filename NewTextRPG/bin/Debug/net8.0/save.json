@@ -1,0 +1,34 @@
+{
+  "Name": "aaaa",
+  "Job": "Mage",
+  "Level": 1,
+  "BaseAttack": 15,
+  "BaseDefense": 3,
+  "MaxHP": 75,
+  "CurrentHP": 75,
+  "Gold": 102,
+  "Inventory": [],
+  "EquippedItems": [
+    {
+      "Name": "\uC9C0\uD321\uC774",
+      "AttackBonus": 15,
+      "DefenseBonus": -2,
+      "MaxHP": 0,
+      "Price": 1300
+    },
+    {
+      "Name": "\uAC11\uC637",
+      "AttackBonus": 0,
+      "DefenseBonus": 10,
+      "MaxHP": 10,
+      "Price": 1200
+    },
+    {
+      "Name": "\uB3C4\uC801\uC758 \uBC29\uD328",
+      "AttackBonus": 2,
+      "DefenseBonus": 10,
+      "MaxHP": 20,
+      "Price": 1600
+    }
+  ]
+}

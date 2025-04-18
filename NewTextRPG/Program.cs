@@ -114,8 +114,16 @@ namespace NewTextRPG
 
         static void StartGame()
         {
+            string swordArt = @"
+              />
+ (           //------------------------------------------------------(
+(*)OXOXOXOXO(*>                -던전은 장비빨-                        \
+ (           \\--------------------------------------------------------)
+              \>
+";
 
             //시작하고 캐릭터 이름 설정
+            Console.WriteLine(swordArt);
             Console.WriteLine("===== 텍스트 RPG에 오신 것을 환영합니다! =====");
             Console.Write("당신의 캐릭터 이름을 입력하세요: ");
             player.Name = Console.ReadLine();
@@ -483,6 +491,9 @@ namespace NewTextRPG
             public int Defense;
             public int RewardGold;
 
+            // 전용 드랍 아이템들 (상점 아이템과 다름)
+            public List<Item> DropItems = new List<Item>();
+
             public Monster(string name, int hp, int atk, int def, int reward)
             {
                 Name = name;
@@ -509,12 +520,17 @@ namespace NewTextRPG
             {
                 case "1":
                     monster = new Monster("고블린", 30, 5, 1, 200);
+                    //몬스터가 어떤 장비를 드랍할 수 있는지 리스트 생성
+                    monster.DropItems.Add(new Item("고블린 방망이", 5, 0, 0, 400));
                     break;
                 case "2":
                     monster = new Monster("오크", 50, 10, 3, 300);
+                    monster.DropItems.Add(new Item("오크 전쟁망치", 12, 1, 0, 800));
                     break;
                 case "3":
                     monster = new Monster("드래곤", 100, 20, 5, 700);
+                    monster.DropItems.Add(new Item("드래곤의 발톱", 20, 10, 10, 1000));
+                    monster.DropItems.Add(new Item("드래곤의 비늘 갑옷", 10, 20, 20, 1200));
                     break;
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
@@ -549,6 +565,7 @@ namespace NewTextRPG
                         Console.WriteLine($"{monster.Name}을(를) 물리쳤습니다!");
                         Console.WriteLine($"{monster.RewardGold}G를 획득했습니다!");
                         player.Gold += monster.RewardGold;
+                        TryDropItem(monster);
                         //전투에서 승리하면 랜덤 이벤트 출력
                         RandomEvent();
                         return;
@@ -575,6 +592,27 @@ namespace NewTextRPG
                 {
                     Console.WriteLine("잘못된 입력입니다.");
                 }
+            }
+        }
+
+        static void TryDropItem(Monster monster)
+        {
+            if (monster.DropItems.Count == 0) return;
+
+            Random rand = new Random();
+            int dropChance = 10; // 10% 확률
+
+            if (rand.Next(100) < dropChance)
+            {
+                // 랜덤하게 하나 선택
+                Item dropped = monster.DropItems[rand.Next(monster.DropItems.Count)];
+                player.Inventory.Add(dropped);
+
+                Console.WriteLine($"{monster.Name}와의 전투에서 승리하여 {dropped.Name} 획득!");
+            }
+            else
+            {
+                Console.WriteLine("전리품을 챙길 수 없었습니다...");
             }
         }
 
@@ -802,7 +840,8 @@ namespace NewTextRPG
             };
 
             string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-            Console.WriteLine("저장할 JSON 데이터:\n" + json);
+            //세이브하는 데 문제가 있으면 밑에 줄 활성화 해서 확인
+            //Console.WriteLine("저장할 JSON 데이터:\n" + json);
             File.WriteAllText("save.json", json);
             Console.WriteLine("\n게임이 저장되었습니다!\n");
         }
